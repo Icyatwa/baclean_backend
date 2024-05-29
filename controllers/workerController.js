@@ -1,3 +1,4 @@
+
 // workerController.js
 const Worker = require('../models/workerModel');
 const multer = require('multer');
@@ -59,48 +60,6 @@ exports.createWorker = [upload.single('image'), async (req, res) => {
   }
 }];
 
-
-
-// exports.createWorker = async (req, res) => {
-//   try {
-//     const {
-//       workerId,
-//       username,
-//       phoneNumber,
-//       country,
-//       province,
-//       district,
-//       sector,
-//       cell,
-//       education,
-//       experience,
-//       job,
-//       salary,
-//     } = req.body;
-    
-//     const newWorker = new Worker({
-//       workerId,
-//       username,
-//       phoneNumber,
-//       country,
-//       province,
-//       district,
-//       sector,
-//       cell,
-//       education,
-//       experience,
-//       job,
-//       salary,
-//     });
-    
-//     const savedWorker = await newWorker.save();
-
-//     res.status(201).json(savedWorker);
-//   } catch (error) {
-//     console.error('MongoDB Error:', error);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// };
 
 exports.getAllWorkers = async (req, res) => {
   try {

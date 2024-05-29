@@ -38,7 +38,7 @@ const workerSchema = new mongoose.Schema({
   experience: { type: String, required: true },
   job: { type: String, required: true },
   salary: { type: String, required: true },
-  imageUrl: { type: String } // New field for image URL
+  imageUrl: { type: String }
 }, { timestamps: true });
 
 const Worker = mongoose.model('Worker', workerSchema);
