@@ -14,6 +14,7 @@ exports.createWorker = [upload.single('image'), async (req, res) => {
     const {
       workerId,
       username,
+      nationalID,
       phoneNumber,
       country,
       province,
@@ -39,6 +40,7 @@ exports.createWorker = [upload.single('image'), async (req, res) => {
     const newWorker = new Worker({
       workerId,
       username,
+      nationalID,
       phoneNumber,
       country,
       province,
