@@ -19,7 +19,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/workers', workerRoutes);
 
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server); 
 
 module.exports.io = io;
 connectDB()
