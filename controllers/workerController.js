@@ -62,6 +62,16 @@ exports.createWorker = [upload.single('image'), async (req, res) => {
   }
 }];
 
+exports.getWorkers = async (req, res) => {
+  const { workerId } = req.params;
+  try {
+    const workers = await Worker.find({ workerId }).sort({ createdAt: -1 });
+    res.status(200).json({ workers });
+  } catch (error) {
+    console.error('Error fetching workers:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 exports.getAllWorkers = async (req, res) => {
   try {
@@ -98,20 +108,33 @@ exports.getWorkerById = async (req, res) => {
   }
 };
 
-exports.updateWorker = async (req, res) => {
+exports.updateWorker = [upload.single('image'), async (req, res) => {
   const workerId = req.params.workerId;
   const updateData = req.body;
+
   try {
+    if (req.file) {
+      // Process the new image
+      const imageName = `${Date.now()}-${req.file.originalname}`;
+      const imagePath = path.join(__dirname, '../uploads', imageName);
+      await sharp(req.file.buffer)
+        .resize(300, 300)
+        .toFile(imagePath);
+      
+      updateData.imageUrl = `/uploads/${imageName}`;  // Update the image URL
+    }
+
     const updatedWorker = await Worker.findByIdAndUpdate(workerId, updateData, { new: true });
     if (!updatedWorker) {
       return res.status(404).json({ message: 'Worker not found' });
     }
     res.status(200).json(updatedWorker);
   } catch (error) {
-    console.error(error);
+    console.error(error); 
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+}];
+
 
 exports.deleteWorker = async (req, res) => {
   const workerId = req.params.workerId;
@@ -126,7 +149,6 @@ exports.deleteWorker = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
 
 exports.searchWorkersByJob = async (req, res) => {
   const jobCategory = req.query.job;
