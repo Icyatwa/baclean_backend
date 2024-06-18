@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const workerSchema = new mongoose.Schema({
-  workerId: { type: String, required: true },
+  workerId: { type: String, required: true, unique: true },
   username: { type: String, required: true },
   nationalID: { type: String, required: true },
   phoneNumber: { type: String, required: true },
